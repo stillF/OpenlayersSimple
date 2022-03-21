@@ -4,19 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>stillF&nbsp;-&nbsp;OpenlayersSimple</title>
-    <link rel="stylesheet" type="text/css" href="/OpenlayersSimple/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="/OpenlayersSimple/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/OpenlayersSimple/css/fontawesome-all.css">
     <link rel="stylesheet" type="text/css" href="/OpenlayersSimple/css/ol.css">
     <script type="text/javascript" src="/OpenlayersSimple/js/vue.js"></script>
     <script type="text/javascript" src="/OpenlayersSimple/js/lodash.js"></script>
-    <script type="text/javascript" src="/OpenlayersSimple/js/ol.js"></script>
+    <script type="text/javascript" src="/OpenlayersSimple/js/ol.js"></script>-->
 
-    <!--<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/fontawesome-all.css">
     <link rel="stylesheet" type="text/css" href="./css/ol.css">
     <script type="text/javascript" src="./js/vue.js"></script>
     <script type="text/javascript" src="./js/lodash.js"></script>
-    <script type="text/javascript" src="./js/ol.js"></script>-->
+    <script type="text/javascript" src="./js/ol.js"></script>
     <style>
         .map {
             height: 800px;
@@ -67,11 +67,11 @@
             })
         });
 
-        var vectorSource = new ol.source.Vector({
+        let vectorSource = new ol.source.Vector({
             //create empty vector
         });
 
-        var styleGreen = new ol.style.Style({
+        let styleGreen = new ol.style.Style({
             //image: new ol.style.Circle({
             //    radius: 7,
             //    fill: new ol.style.Fill({
@@ -85,25 +85,26 @@
             }))
         });
 
-        let sites = [];
-        sites.push({ lat_x: '120.256452', lat_y: '23.023566' });
-        sites.push({ lat_x: '120.255338', lat_y: '23.024141' });
-        sites.push({ lat_x: '120.254828', lat_y: '23.024836' });
-        sites.push({ lat_x: '120.257075', lat_y: '23.027646' });
-        sites.push({ lat_x: '120.255707', lat_y: '23.025645' });
-        sites.push({ lat_x: '120.256703', lat_y: '23.028615' });
-        sites.push({ lat_x: '120.255366', lat_y: '23.029277' });
-        sites.push({ lat_x: '120.254859', lat_y: '23.029154' });
-        sites.push({ lat_x: '120.253279', lat_y: '23.029532' });
+        let places = [];
+        places.push({ lat_x: 120.253279, lat_y: 23.029532 });
+        places.push({ lat_x: 120.253885, lat_y: 23.027879 });
+        places.push({ lat_x: 120.254828, lat_y: 23.024836 });
+        places.push({ lat_x: 120.254859, lat_y: 23.029154 });
+        places.push({ lat_x: 120.255338, lat_y: 23.024141 });
+        places.push({ lat_x: 120.255366, lat_y: 23.029277 });
+        places.push({ lat_x: 120.255707, lat_y: 23.025645 });
+        places.push({ lat_x: 120.256452, lat_y: 23.023566 });
+        places.push({ lat_x: 120.256703, lat_y: 23.028615 });
+        places.push({ lat_x: 120.257075, lat_y: 23.027646 });
 
-        for (let key in sites) {
+        for (let key in places) {
             let iconFeature = new ol.Feature({
-                geometry: new ol.geom.Point(ol.proj.fromLonLat([sites[key]["lat_x"], sites[key]["lat_y"]]))
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([places[key]["lat_x"], places[key]["lat_y"]]))
             });
             vectorSource.addFeature(iconFeature);
         }
 
-        var vectorLayer = new ol.layer.Vector({
+        let vectorLayer = new ol.layer.Vector({
             source: vectorSource,
             style: styleGreen
         });
