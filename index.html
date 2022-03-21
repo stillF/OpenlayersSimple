@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stillF&nbsp;-&nbsp;OpenlayersSimple</title>
+    <!--<link rel="stylesheet" type="text/css" href="/OpenlayersSimple/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/OpenlayersSimple/css/fontawesome-all.css">
+    <link rel="stylesheet" type="text/css" href="/OpenlayersSimple/css/ol.css">
+    <script type="text/javascript" src="/OpenlayersSimple/js/vue.js"></script>
+    <script type="text/javascript" src="/OpenlayersSimple/js/lodash.js"></script>
+    <script type="text/javascript" src="/OpenlayersSimple/js/ol.js"></script>-->
+
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/fontawesome-all.css">
+    <link rel="stylesheet" type="text/css" href="./css/ol.css">
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript" src="./js/lodash.js"></script>
+    <script type="text/javascript" src="./js/ol.js"></script>
+    <style>
+        .map {
+            height: 800px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+        <div class="container-fluid">
+            <a href="https://stillf.github.io/" class="navbar-brand" style="color:#ffffff;margin-left:10px;font-size:18px;" target="_blank">stillF&ensp;信柴柴，得第一</a>
+        </div>
+    </nav>
+    <main class="container" style="margin-bottom:50px;" id="stock">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div style="color:#333;font-size:22px;font-weight:bold;">
+                OpenlayersSimple
+                <a href="https://github.com/stillF/OpenlayersTest" style="margin-left:5px;" target="_blank"><i class="fas fa-link"></i></a>
+            </div>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div id="map" class="map"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer py-1 bg-dark">
+        <div class="container text-center">
+            <span style="color:#ffffff;font-size:14px;">© Copyright 2022. All Rights Reserved.</span>
+        </div>
+    </footer>
+    <script>
+        // 宣告一個 Map 物件
+        let map = new ol.Map({
+            // 將 Map 物件目標指向 div，這邊要注意的是其值是 div 的 id 屬性。
+            target: 'map',
+            // 這裡是宣告圖層陣列，範例加入的是 OSM 圖磚圖層。
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            // 這裡是初始化地圖視圖的地方。定義初始中心位置及視圖層級
+            view: new ol.View({
+                center: ol.proj.fromLonLat([120.2560081, 23.0261936]),
+                zoom: 16
+            })
+        });
+
+        var vectorSource = new ol.source.Vector({
+            //create empty vector
+        });
+
+        var styleGreen = new ol.style.Style({
+            //image: new ol.style.Circle({
+            //    radius: 7,
+            //    fill: new ol.style.Fill({
+            //        color: 'red'
+            //    })
+            //})
+            image: new ol.style.Icon(({
+                color: '#ff0000',
+                crossOrigin: 'anonymous',
+                src: 'img/dot.png'
+            }))
+        });
+
+        let sites = [];
+        sites.push({ lat_x: '120.256452', lat_y: '23.023566' });
+        sites.push({ lat_x: '120.255338', lat_y: '23.024141' });
+        sites.push({ lat_x: '120.254828', lat_y: '23.024836' });
+        sites.push({ lat_x: '120.257075', lat_y: '23.027646' });
+        sites.push({ lat_x: '120.255707', lat_y: '23.025645' });
+        sites.push({ lat_x: '120.256703', lat_y: '23.028615' });
+        sites.push({ lat_x: '120.255366', lat_y: '23.029277' });
+        sites.push({ lat_x: '120.254859', lat_y: '23.029154' });
+        sites.push({ lat_x: '120.253279', lat_y: '23.029532' });
+
+        for (let key in sites) {
+            let iconFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([sites[key]["lat_x"], sites[key]["lat_y"]]))
+            });
+            vectorSource.addFeature(iconFeature);
+        }
+
+        var vectorLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: styleGreen
+        });
+
+        map.addLayer(vectorLayer);
+    </script>
+</body>
+</html>
